@@ -45,7 +45,7 @@ gulp.task('babelify',['crisper'], function() {
         .pipe(gulp.dest('dist/components'));
 });
 
-gulp.task('vulcanize',['crisper','babelify'], function() {
+gulp.task('vulcanize',['crisper','babelify','copyBower'], function() {
     //Vulcanize selected files for optimization
     var vulcanize = require('gulp-vulcanize')
     return gulp.src(['dist/components/icon-toggle.html'])
@@ -71,18 +71,19 @@ gulp.task('vulcanize',['crisper','babelify'], function() {
 
 gulp.task('app-get-bower', function(){
     var bower = require('gulp-bower')
-    return gulp.src(['bower_components/app-layout/bower.json','bower_components/app-layout/*/*/bower.json','!bower_components/app-layout/**/bower_components/*/bower.json'])
+    return gulp.src([
+        'bower_components/app-layout/bower.json',
+        'bower_components/app-layout/*/*/bower.json',
+        '!bower_components/app-layout/**/bower_components/*/bower.json'])
         .pipe(tap(function(file,t) { 
             var directory = file.path.replace('\\bower.json','')            
             process.chdir(directory)
-            return bower()
-            /*
+            
             if (file.path.endsWith('bower_components\\app-layout\\bower.json'))
                 return bower('../')
             else {
                 return bower()
             }
-            */
         }))
 })
 gulp.task('app',['app-get-bower'])
