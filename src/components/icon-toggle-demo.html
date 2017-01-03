@@ -1,0 +1,58 @@
+<!-- import latest release version of all components from polygit -->
+<!--
+<link rel="import" href="https://polygit.org/components/polymer/polymer.html">
+<link rel="import" href="https://polygit.org/components/iron-icons/iron-icons.html">
+-->
+<!-- 
+Alternatively we download polymer from the URL and save it in VendorComponents
+This is so that we have the latest version of Polymer. Later on, when the npm package 
+is updated, we should be able to 'npm install Polymer' and copy them straight 
+into folder VendorComponents. For the elements we can 'npm install npm-polymer-elements'
+and copy relevant items into folder VendorComponents.
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="icon-toggle.html">
+
+
+<dom-module id="icon-toggle-demo">
+    <template>
+        <style>
+            :host {
+                font-family: sans-serif;
+                --icon-toggle-color: lightgrey;
+                --icon-toggle-outline-color: black;
+                --icon-toggle-pressed-color: red;
+            };
+        </style>
+
+        <h3>Statically-configured icon-toggles</h3>
+
+        <icon-toggle toggle-icon="star"></icon-toggle>
+        <icon-toggle toggle-icon="star" pressed></icon-toggle>
+
+        <h3>Data-bound icon-toggle</h3>
+
+        <!-- use a computed binding to generate the message -->
+        <div><span>[[message(isFav)]]</span></div>
+
+        <!-- curly brackets ({{}}} allow two-way binding --> 
+        <icon-toggle toggle-icon="favorite" pressed="{{isFav}}"></icon-toggle>
+    </template>
+  
+    <script>
+        class IconToggleDemo {
+            beforeRegister() {
+              this.is = 'icon-toggle-demo'
+            }
+            message(fav) {
+                if (fav) {
+                    return "You really like me!";
+                } else {
+                    return "Do you like me?";
+                }
+            }
+        }
+        Polymer(IconToggleDemo)
+  </script>
+</dom-module>

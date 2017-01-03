@@ -1,0 +1,63 @@
+<!-- import latest release version of all components from polygit -->
+<!--
+<link rel="import" href="https://polygit.org/components/polymer/polymer.html">
+<link rel="import" href="https://polygit.org/components/iron-icon/iron-icon.html">
+-->
+<!-- 
+Alternatively we download polymer from the URL and save it in VendorComponents
+This is so that we have the latest version of Polymer. Later on, when the npm package 
+is updated, we should be able to 'npm install Polymer' and copy them straight 
+into folder VendorComponents. For the elements we can 'npm install npm-polymer-elements'
+and copy relevant items into folder VendorComponents.
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+
+<dom-module id="icon-toggle">
+     <template>
+        <style>
+            /* local DOM styles go here */
+
+            :host {
+                display: inline-block;
+            }
+
+            iron-icon {
+                fill: var(--icon-toggle-color, rgba(0,0,0,0));
+                stroke: var(--icon-toggle-outline-color, currentcolor);
+            }
+
+            :host([pressed]) iron-icon {
+                fill: var(--icon-toggle-pressed-color, currentcolor);
+            }
+        </style>
+
+        <!-- local DOM goes here -->
+        <iron-icon icon="[[toggleIcon]]">
+        </iron-icon>
+    </template>
+    <script>
+        class IconToggle {
+            beforeRegister() {
+                this.is = 'icon-toggle'
+                this.properties = {
+                    toggleIcon: String,
+                    pressed: {
+                      type: Boolean,
+                      value: false,
+                      notify: true,
+                      reflectToAttribute: true
+                    }
+                }
+                this.listeners =  {
+                    'tap': 'toggle'
+                }
+            }
+            toggle() {
+                this.pressed = !this.pressed
+            }
+        }
+        Polymer(IconToggle)
+    </script>
+
+</dom-module>
